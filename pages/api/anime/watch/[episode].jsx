@@ -28,16 +28,29 @@ export default async function handler(req, res) {
     if (searchResult) {
         let title = searchResult.data.title.replaceAll('(', 'openingPar').replaceAll(')', 'closingPar').replaceAll(',', 'uneVirgule').replaceAll('♀', 'uneWoman').replaceAll(':', '').replaceAll('.', 'dotPoint').replaceAll(/[\W_]+/g, " ");
         let epTitleNumber
-        if (title.split(" ")[title.split(" ").length - 2].length === 1) {
-            epTitleNumber =
-                "-_EP" + pad(title.split(" ")[title.split(" ").length - 2], 2);
+        if (searchResult.data.anime.type !== 'movie') {
+
+            if (title.split(" ")[title.split(" ").length - 2].length === 1) {
+                epTitleNumber =
+                    "-_EP" + pad(title.split(" ")[title.split(" ").length - 2], 2);
+            } else {
+                epTitleNumber =
+                    "-_EP" + title.split(" ")[title.split(" ").length - 2];
+            }
+
+            title = title.split(" ");
+            title.pop();
+            title[title.length - 1] = epTitleNumber;
+
         } else {
-            epTitleNumber =
-                "-_EP" + title.split(" ")[title.split(" ").length - 2];
+            epTitleNumber = '-_MOVIE'
+            title = title.split(" ");
+            title.pop();
+            title[title.length] = epTitleNumber;
         }
-        title = title.split(" ");
-        title.pop();
-        title[title.length - 1] = epTitleNumber;
+        const toFilter = ['']
+        title = title.filter(item => !toFilter.includes(item))
+
         title = title.join("_").replaceAll('openingPar', '(').replaceAll('dotPoint', '.').replaceAll('closingPar', ')').replaceAll('uneWoman', '♀').replaceAll('uneVirgule', '%2C');
         const videoId = searchResult.data.video_id;
         const epLinks = {
