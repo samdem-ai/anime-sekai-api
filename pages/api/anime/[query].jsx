@@ -13,5 +13,5 @@ async function searchAnime(query) {
 export default async function handler(req, res) {
     const { query } = req.query
     const searchResult = await searchAnime(query)
-    res.status(200).json(searchResult.data)
+    res.status(200).json(searchResult)
 }
