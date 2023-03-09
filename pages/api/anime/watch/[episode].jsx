@@ -65,19 +65,14 @@ export default async function handler(req, res) {
 
         const toFilter = ['']
         title = title.filter(item => !toFilter.includes(item))
-        let newTitle = ""
-        title.forEach(e => {
-            newTitle += e
-            newTitle += '_'
-        });
-
-        newTitle = newTitle
+        let newTitle = title.join('_')
             .replaceAll('openingPar', '(')
             .replaceAll('dotPoint', '.')
             .replaceAll('closingPar', ')')
             .replaceAll('uneWoman', '♀')
             .replaceAll('uneVirgule', '%2C')
             .replaceAll('sixLine', '-')
+
 
 
 
