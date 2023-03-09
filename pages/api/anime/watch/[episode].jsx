@@ -64,24 +64,32 @@ export default async function handler(req, res) {
 
         const toFilter = ['']
         title = title.filter(item => !toFilter.includes(item))
+        let newTitle = ""
+        title.forEach(e => {
+            newTitle += e
+            if (e.length !== 1) {
+                newTitle += '_'
+            }
+        });
 
-        title = title.join("_")
+        newTitle = newTitle
             .replaceAll('openingPar', '(')
             .replaceAll('dotPoint', '.')
             .replaceAll('closingPar', ')')
             .replaceAll('uneWoman', '♀')
             .replaceAll('uneVirgule', '%2C');
 
+
         const videoId = searchResult.data.video_id;
 
         const epLinks = {
             title: `${searchResult.data.title}`,
             thumbnail: `https://api.animeiat.co/storage/${searchResult.data.poster_path}`,
-            "360p": `https://cdn.animeiat.tv/files/${videoId}/%5BAnimeiat.co%5D${title}%5B360p%5D.mp4`,
-            "480p": `https://cdn.animeiat.tv/files/${videoId}/%5BAnimeiat.co%5D${title}%5B480p%5D.mp4`,
-            "720p": `https://cdn.animeiat.tv/files/${videoId}/%5BAnimeiat.co%5D${title}%5B720p%5D.mp4`,
-            "1080p": `https://cdn.animeiat.tv/files/${videoId}/%5BAnimeiat.co%5D${title}%5B1080p%5D.mp4`,
-            "backup": `https://api.animeiat.co/storage/videos/[Animeiat.co]${title.replaceAll('_', ' ')}.mp4`
+            "360p": `https://cdn.animeiat.tv/files/${videoId}/%5BAnimeiat.co%5D${newTitle}%5B360p%5D.mp4`,
+            "480p": `https://cdn.animeiat.tv/files/${videoId}/%5BAnimeiat.co%5D${newTitle}%5B480p%5D.mp4`,
+            "720p": `https://cdn.animeiat.tv/files/${videoId}/%5BAnimeiat.co%5D${newTitle}%5B720p%5D.mp4`,
+            "1080p": `https://cdn.animeiat.tv/files/${videoId}/%5BAnimeiat.co%5D${newTitle}%5B1080p%5D.mp4`,
+            "backup": `https://api.animeiat.co/storage/videos/[Animeiat.co]${newTitle.replaceAll('_', ' ')}.mp4`
         };
 
         const result360 = fetch(epLinks['360p'])
