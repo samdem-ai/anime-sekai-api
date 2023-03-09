@@ -36,6 +36,7 @@ export default async function handler(req, res) {
             .replaceAll('♀', 'uneWoman')
             .replaceAll(':', '')
             .replaceAll('.', 'dotPoint')
+            .replaceAll('-', 'sixLine')
             .replaceAll(/[\W_]+/g, " ");
 
         let epTitleNumber
@@ -67,9 +68,7 @@ export default async function handler(req, res) {
         let newTitle = ""
         title.forEach(e => {
             newTitle += e
-            if (e.length !== 1) {
-                newTitle += '_'
-            }
+            newTitle += '_'
         });
 
         newTitle = newTitle
@@ -77,7 +76,9 @@ export default async function handler(req, res) {
             .replaceAll('dotPoint', '.')
             .replaceAll('closingPar', ')')
             .replaceAll('uneWoman', '♀')
-            .replaceAll('uneVirgule', '%2C');
+            .replaceAll('uneVirgule', '%2C')
+            .replaceAll('sixLine', '-')
+
 
 
         const videoId = searchResult.data.video_id;
